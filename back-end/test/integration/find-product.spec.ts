@@ -4,18 +4,14 @@ import type { ProductRepository } from "../../src/domain/repositories/Product.re
 
 describe("Busca produto por id", () => {
   let findProductUseCase: FindProductUseCase;
-  let repository: ProductRepository;
+  let repository: jest.Mocked<ProductRepository>;
   beforeEach(() => {
     repository = {
-      save: jest.fn().mockImplementation(() => {
-        throw new Error();
-      }),
-      update: jest.fn().mockResolvedValue(() => {
-        throw new Error();
-      }),
+      save: jest.fn(),
+      update: jest.fn(),
       findById: jest.fn().mockResolvedValue(null),
-      findAll: jest.fn().mockResolvedValue([]),
-      delete: jest.fn().mockResolvedValue(undefined),
+      findAll: jest.fn(),
+      delete: jest.fn(),
     };
     findProductUseCase = new FindProductUseCase(repository);
   });

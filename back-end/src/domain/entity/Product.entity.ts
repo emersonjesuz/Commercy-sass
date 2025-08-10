@@ -46,6 +46,10 @@ export class ProductEntity {
       throw new ProductPriceInvalidError();
     }
   }
+
+  getName() {
+    return this.name;
+  }
   toJson() {
     return {
       productId: this.productId,

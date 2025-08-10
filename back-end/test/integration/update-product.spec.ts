@@ -4,16 +4,14 @@ import type { ProductRepository } from "../../src/domain/repositories/Product.re
 
 describe("Atualizar produto", () => {
   let updateProductUseCase: UpdateProductUseCase;
-  let repository: ProductRepository;
+  let repository: jest.Mocked<ProductRepository>;
   beforeEach(() => {
     repository = {
-      save: jest.fn().mockImplementation(() => {
-        throw new Error();
-      }),
+      save: jest.fn(),
       update: jest.fn().mockResolvedValue(new ProductEntity("id-qualquer", "batom", "Batom vermelho da Avon", 1, 10.5)),
       findById: jest.fn().mockResolvedValue(new ProductEntity("id-qualquer", "batom", "", 1, 10)),
-      findAll: jest.fn().mockResolvedValue([]),
-      delete: jest.fn().mockResolvedValue(undefined),
+      findAll: jest.fn(),
+      delete: jest.fn(),
     };
     updateProductUseCase = new UpdateProductUseCase(repository);
   });

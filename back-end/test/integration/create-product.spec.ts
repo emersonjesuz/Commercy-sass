@@ -1,26 +1,17 @@
 import { CreateProductUseCase } from "../../src/application/usecases/products/CreateProduct.usecase";
+import { ProductEntity } from "../../src/domain/entity/Product.entity";
 import type { ProductRepository } from "../../src/domain/repositories/Product.repository";
 
 describe("Criar produtos", () => {
   let createProductUseCase: CreateProductUseCase;
-  let repository: ProductRepository;
-  beforeAll(() => {
+  let repository: jest.Mocked<ProductRepository>;
+  beforeEach(() => {
     repository = {
-      async save(input) {
-        return input;
-      },
-      update() {
-        throw new Error("");
-      },
-      async findById(productId) {
-        return null;
-      },
-      async findAll() {
-        return [];
-      },
-      async delete(productId) {
-        return;
-      },
+      save: jest.fn().mockReturnValue(new ProductEntity("id-qualquer", "batom", "Batom vermelho da Avon", 1, 10.5)),
+      update: jest.fn(),
+      findById: jest.fn(),
+      findAll: jest.fn(),
+      delete: jest.fn(),
     };
     createProductUseCase = new CreateProductUseCase(repository);
   });

@@ -22,6 +22,27 @@ describe("Produtos", () => {
     expect(product.toJson()).toEqual(output);
   });
 
+  test("Deve retorna retorna o nome do produto pelo metodo getName", () => {
+    const input = {
+      productId: "1a12a2a2a1a",
+      name: "batom",
+      description: "Batom vermelho da avon",
+      quantity: 1,
+      price: 10.5,
+      createdAt: new Date(),
+    };
+    const output = input;
+    const product = new ProductEntity(
+      input.productId,
+      input.name,
+      input.description,
+      input.quantity,
+      input.price,
+      input.createdAt
+    );
+    expect(product.getName()).toEqual(output.name);
+  });
+
   test("Deve lançar um erro se o nome for vazio", () => {
     const input = {
       productId: "1a12a2a2a1a",

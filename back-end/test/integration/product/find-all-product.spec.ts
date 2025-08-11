@@ -1,21 +1,21 @@
-import { FindAllProductUseCase } from "../../src/application/usecases/products/FindAllProduct.usecase";
-import { ProductEntity } from "../../src/domain/entity/Product.entity";
-import type { ProductRepository } from "../../src/domain/repositories/Product.repository";
+import { FindAllProductUseCase } from "../../../src/application/usecases/product/FindAllProduct.usecase";
+import { ProductEntity } from "../../../src/domain/entity/Product.entity";
+import type { ProductRepository } from "../../../src/domain/repositories/Product.repository";
 
 describe("Buscar todos os produtos", () => {
   let findAllProductUseCase: FindAllProductUseCase;
   let repository: jest.Mocked<ProductRepository>;
   const dataDatabaseMock = [
-    new ProductEntity("id-001", "Batom", "Batom vermelho da Avon", 1, 10.5),
-    new ProductEntity("id-002", "Perfume", "Perfume floral 50ml", 2, 120.0),
-    new ProductEntity("id-003", "Shampoo", "Shampoo hidratante 300ml", 3, 25.9),
-    new ProductEntity("id-004", "Condicionador", "Condicionador nutritivo 300ml", 4, 27.5),
-    new ProductEntity("id-005", "Creme para mãos", "Creme para hidratação profunda", 5, 15.0),
-    new ProductEntity("id-006", "Base líquida", "Base líquida efeito matte", 2, 45.9),
-    new ProductEntity("id-007", "Lápis de olho", "Lápis preto à prova d'água", 6, 8.75),
-    new ProductEntity("id-008", "Máscara de cílios", "Máscara para volume intenso", 3, 32.4),
-    new ProductEntity("id-009", "Sabonete líquido", "Sabonete líquido de lavanda", 7, 12.9),
-    new ProductEntity("id-010", "Óleo corporal", "Óleo corporal perfumado", 1, 55.0),
+    new ProductEntity("id-001", "Batom", "Batom vermelho da Avon", 1, 10.5, new Date(), "cat-001"),
+    new ProductEntity("id-002", "Perfume", "Perfume floral 50ml", 2, 120.0, new Date(), "cat-001"),
+    new ProductEntity("id-003", "Shampoo", "Shampoo hidratante 300ml", 3, 25.9, new Date(), "cat-001"),
+    new ProductEntity("id-004", "Condicionador", "Condicionador nutritivo 300ml", 4, 27.5, new Date(), "cat-001"),
+    new ProductEntity("id-005", "Creme para mãos", "Creme para hidratação profunda", 5, 15.0, new Date(), "cat-001"),
+    new ProductEntity("id-006", "Base líquida", "Base líquida efeito matte", 2, 45.9, new Date(), "cat-001"),
+    new ProductEntity("id-007", "Lápis de olho", "Lápis preto à prova d'água", 6, 8.75, new Date(), "cat-001"),
+    new ProductEntity("id-008", "Máscara de cílios", "Máscara para volume intenso", 3, 32.4, new Date(), "cat-001"),
+    new ProductEntity("id-009", "Sabonete líquido", "Sabonete líquido de lavanda", 7, 12.9, new Date(), "cat-001"),
+    new ProductEntity("id-010", "Óleo corporal", "Óleo corporal perfumado", 1, 55.0, new Date(), "cat-001"),
   ];
   beforeEach(() => {
     repository = {

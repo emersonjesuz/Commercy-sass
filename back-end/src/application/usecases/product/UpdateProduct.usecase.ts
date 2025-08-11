@@ -11,7 +11,15 @@ export class UpdateProductUseCase {
     if (!productDataDatabase) {
       throw new ProductNotFindError();
     }
-    const product = new ProductEntity(undefined, input.name, input.description, input.quantity, input.price);
+    const product = new ProductEntity(
+      undefined,
+      input.name,
+      input.description,
+      input.quantity,
+      input.price,
+      undefined,
+      input.catalogId
+    );
     const response = await this.productRepository.update(product, productId);
     return response.toJson();
   }
@@ -22,4 +30,5 @@ interface Input {
   description: string;
   quantity: number;
   price: number;
+  catalogId: string;
 }

@@ -1,6 +1,6 @@
-import { FindProductUseCase } from "../../src/application/usecases/products/FindProduct.usecase";
-import { ProductEntity } from "../../src/domain/entity/Product.entity";
-import type { ProductRepository } from "../../src/domain/repositories/Product.repository";
+import { FindProductUseCase } from "../../../src/application/usecases/product/FindProduct.usecase";
+import { ProductEntity } from "../../../src/domain/entity/Product.entity";
+import type { ProductRepository } from "../../../src/domain/repositories/Product.repository";
 
 describe("Busca produto por id", () => {
   let findProductUseCase: FindProductUseCase;
@@ -17,7 +17,9 @@ describe("Busca produto por id", () => {
   });
 
   test("Deve retorna um produto", async () => {
-    (repository.findById as jest.Mock).mockResolvedValue(new ProductEntity("1ab2c3", "batom", "Batom vermelho da Avon", 1, 10.5));
+    (repository.findById as jest.Mock).mockResolvedValue(
+      new ProductEntity("1ab2c3", "batom", "Batom vermelho da Avon", 1, 10.5, new Date(), "cat-001")
+    );
     const productId = "1ab2c3";
     const response = await findProductUseCase.execute(productId);
     const output = {

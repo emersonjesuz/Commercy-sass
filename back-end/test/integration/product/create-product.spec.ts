@@ -1,13 +1,15 @@
-import { CreateProductUseCase } from "../../src/application/usecases/products/CreateProduct.usecase";
-import { ProductEntity } from "../../src/domain/entity/Product.entity";
-import type { ProductRepository } from "../../src/domain/repositories/Product.repository";
+import { CreateProductUseCase } from "../../../src/application/usecases/product/CreateProduct.usecase";
+import { ProductEntity } from "../../../src/domain/entity/Product.entity";
+import type { ProductRepository } from "../../../src/domain/repositories/Product.repository";
 
 describe("Criar produtos", () => {
   let createProductUseCase: CreateProductUseCase;
   let repository: jest.Mocked<ProductRepository>;
   beforeEach(() => {
     repository = {
-      save: jest.fn().mockReturnValue(new ProductEntity("id-qualquer", "batom", "Batom vermelho da Avon", 1, 10.5)),
+      save: jest
+        .fn()
+        .mockReturnValue(new ProductEntity("id-qualquer", "batom", "Batom vermelho da Avon", 1, 10.5, new Date(), "cat-001")),
       update: jest.fn(),
       findById: jest.fn(),
       findAll: jest.fn(),
@@ -22,6 +24,7 @@ describe("Criar produtos", () => {
       description: "Batom vermelho da Avon",
       quantity: 1,
       price: 10.5,
+      catalogId: "cat-001",
     };
     const response = await createProductUseCase.execute(input);
     expect(response).toHaveProperty("productId");
@@ -38,8 +41,9 @@ describe("Criar produtos", () => {
       description: "Batom vermelho da Avon",
       quantity: 1,
       price: 10.5,
+      catalogId: "cat-001",
     };
-    await expect(() => createProductUseCase.execute(input)).rejects.toThrow("O nome do produto é não pode ser vazio!");
+    await expect(() => createProductUseCase.execute(input)).rejects.toThrow("O nome do produto não pode ser vazio!");
   });
 
   test("Deve não ser possivel criar um produto se a quantidade for menor igual a zero", async () => {
@@ -48,6 +52,7 @@ describe("Criar produtos", () => {
       description: "Batom vermelho da Avon",
       quantity: 0,
       price: 10.5,
+      catalogId: "cat-001",
     };
     await expect(() => createProductUseCase.execute(input)).rejects.toThrow("A quantidade não pode ser inferior a um!");
   });
@@ -58,7 +63,19 @@ describe("Criar produtos", () => {
       description: "Batom vermelho da Avon",
       quantity: 1,
       price: 0,
+      catalogId: "cat-001",
     };
     await expect(() => createProductUseCase.execute(input)).rejects.toThrow("O preço não pode ser menor ou igual a zero!");
+  });
+
+  test("Deve não criar o produto se o catalogId não for informado!", async () => {
+    const input = {
+      name: "batom",
+      description: "Batom vermelho da Avon",
+      quantity: 2,
+      price: 10,
+      catalogId: "",
+    };
+    await expect(createProductUseCase.execute(input)).rejects.toThrow("O identificador do catalogo é obrigatório!");
   });
 });

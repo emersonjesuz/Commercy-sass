@@ -1,6 +1,6 @@
-import { DeleteProductUseCase } from "../../src/application/usecases/products/DeleteProduct.usecase";
-import { ProductEntity } from "../../src/domain/entity/Product.entity";
-import type { ProductRepository } from "../../src/domain/repositories/Product.repository";
+import { DeleteProductUseCase } from "../../../src/application/usecases/product/DeleteProduct.usecase";
+import { ProductEntity } from "../../../src/domain/entity/Product.entity";
+import type { ProductRepository } from "../../../src/domain/repositories/Product.repository";
 
 describe("Excluir pedido", () => {
   let deleteProductUseCase: DeleteProductUseCase;
@@ -9,7 +9,9 @@ describe("Excluir pedido", () => {
     repository = {
       save: jest.fn(),
       update: jest.fn(),
-      findById: jest.fn().mockResolvedValue(new ProductEntity("id-003", "Shampoo", "Shampoo hidratante 300ml", 3, 25.9)),
+      findById: jest
+        .fn()
+        .mockResolvedValue(new ProductEntity("id-003", "Shampoo", "Shampoo hidratante 300ml", 3, 25.9, new Date(), "cat-001")),
       findAll: jest.fn(),
       delete: jest.fn(),
     };

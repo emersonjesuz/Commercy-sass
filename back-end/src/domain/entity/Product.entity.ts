@@ -1,3 +1,4 @@
+import { CatalogIdIsEmptyError } from "../exceptions/CatalogIdIsEmptyError";
 import { ProductNameIsEmptyError } from "../exceptions/ProductNameIsEmptyError";
 import { ProductPriceInvalidError } from "../exceptions/ProductPriceInvalidError";
 import { ProductQuantityInvalidError } from "../exceptions/ProductQuantityInvalidError";
@@ -9,6 +10,7 @@ export class ProductEntity {
   private quantity: number;
   private price: number;
   private createdAt: Date;
+  private catalogId: string;
 
   constructor(
     productId: string = "",
@@ -16,11 +18,13 @@ export class ProductEntity {
     description: string,
     quantity: number,
     price: number,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
+    catalogId: string
   ) {
     this.validateName(name);
     this.validateQuantity(quantity);
     this.validatePrice(price);
+    this.validateCatalogId(catalogId);
 
     this.productId = productId;
     this.name = name;
@@ -28,6 +32,7 @@ export class ProductEntity {
     this.quantity = quantity;
     this.price = price;
     this.createdAt = createdAt;
+    this.catalogId = catalogId;
   }
 
   private validateName(name: string) {
@@ -46,7 +51,11 @@ export class ProductEntity {
       throw new ProductPriceInvalidError();
     }
   }
-
+  private validateCatalogId(catalogId: string) {
+    if (!catalogId || !catalogId.trim()) {
+      throw new CatalogIdIsEmptyError();
+    }
+  }
   getName() {
     return this.name;
   }
@@ -58,6 +67,7 @@ export class ProductEntity {
       quantity: this.quantity,
       price: this.price,
       createdAt: this.createdAt,
+      catalogId: this.catalogId,
     };
   }
 }

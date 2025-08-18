@@ -1,4 +1,4 @@
-import { ProductIdValidator } from "../../src/domain/validators/productId.validator";
+import { ProductIdValidator } from "../../src/domain/validators/ProductId.validator";
 
 describe("Validar id do produto", () => {
   test("Deve lança um erro se o productId for vazio", () => {

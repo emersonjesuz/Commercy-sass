@@ -1,10 +1,11 @@
 import { CatalogEntity } from "../../../domain/entity/Catalog.entity";
 import { ProductEntity } from "../../../domain/entity/Product.entity";
 import type { CatalogRepository } from "../../../domain/repositories/Catalog.repository";
+import type { ProductRepository } from "../../../domain/repositories/Product.repository";
 import type { CreateCatalogDto } from "../../dtos/CreateCatalog.dto";
 
 export class CreateCatalogUseCase {
-  constructor(private readonly catalogRepository: CatalogRepository) {}
+  constructor(private readonly catalogRepository: CatalogRepository, private productRepository: ProductRepository) {}
   async execute(input: CreateCatalogDto) {
     const catalogDataDatabase = await this.catalogRepository.save(input.name);
     const products = input.products.map(
@@ -19,6 +20,7 @@ export class CreateCatalogUseCase {
           catalogDataDatabase.getCatalogId()
         )
     );
+    await this.productRepository.saveAll(products);
     const catalog = new CatalogEntity(undefined, input.name, products);
     return catalog.toJson();
   }

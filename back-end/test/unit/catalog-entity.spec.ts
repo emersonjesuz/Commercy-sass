@@ -73,4 +73,25 @@ describe("Catalogo entidade", () => {
     expect(products).toHaveLength(5);
     expect(products.map((product) => product.productId)).toEqual(["id-001", "id-002", "id-003", "id-004", "id-005"]);
   });
+
+  test("Deve Adicionar uma produto a lista ao chamar o metodo addProduct", () => {
+    const catalogId = "cat-001";
+    const input = {
+      catalogId,
+      name: "Cosméticos",
+      products: [
+        new ProductEntity("id-001", "Batom", "Batom vermelho da Avon", 1, 10.5, undefined, catalogId),
+        new ProductEntity("id-002", "Perfume", "Perfume floral 50ml", 2, 120.0, undefined, catalogId),
+        new ProductEntity("id-003", "Shampoo", "Shampoo hidratante 300ml", 3, 25.9, undefined, catalogId),
+        new ProductEntity("id-004", "Condicionador", "Condicionador nutritivo 300ml", 4, 27.5, undefined, catalogId),
+        new ProductEntity("id-005", "Creme para mãos", "Creme para hidratação profunda", 5, 15.0, undefined, catalogId),
+      ],
+      createdAt: new Date(),
+    };
+    const response = new CatalogEntity(input.catalogId, input.name, input.products, input.createdAt);
+    response.addProduct("id-006", "Batom", "Batom vermelho da Avon", 1, 10.5, undefined);
+    const products = response.getProducts();
+    expect(products).toHaveLength(6);
+    expect(products.map((product) => product.productId)).toEqual(["id-001", "id-002", "id-003", "id-004", "id-005", "id-006"]);
+  });
 });

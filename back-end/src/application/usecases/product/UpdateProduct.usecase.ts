@@ -1,7 +1,7 @@
 import { ProductEntity } from "../../../domain/entity/Product.entity";
 import { ProductNotFindError } from "../../../domain/exceptions/ProductNotFindError";
 import type { ProductRepository } from "../../../domain/repositories/Product.repository";
-import { ProductIdValidator } from "../../../domain/validators/productId.validator";
+import { ProductIdValidator } from "../../../domain/validators/ProductId.validator";
 
 export class UpdateProductUseCase {
   constructor(private readonly productRepository: ProductRepository) {}

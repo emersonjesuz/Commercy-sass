@@ -1,6 +1,6 @@
 import { CatalogIdIsEmptyError } from "../exceptions/CatalogIdIsEmptyError";
 import { CatalogNameIsEmptyError } from "../exceptions/CatalogNameIsEmptyError";
-import type { ProductEntity } from "./Product.entity";
+import { ProductEntity } from "./Product.entity";
 
 const input = {
   catalogId: "cat-001",
@@ -39,6 +39,17 @@ export class CatalogEntity {
 
   getProducts() {
     return this.products.map((product) => product.toJson());
+  }
+
+  addProduct(
+    productId: string = "",
+    name: string,
+    description: string,
+    quantity: number,
+    price: number,
+    createdAt: Date = new Date()
+  ) {
+    this.products.push(new ProductEntity(productId, name, description, quantity, price, createdAt, this.getCatalogId()));
   }
 
   toJson() {
